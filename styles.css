@@ -717,3 +717,62 @@ body {
         width: 100%;
     }
 }
+
+
+/* Responsive Table (Card Layout for Mobile) */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: hidden !important; /* Disable horizontal scroll since we stack now */
+    }
+    
+    .data-table, .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr { 
+        display: block; 
+    }
+    
+    .data-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    .data-table tr {
+        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .data-table td { 
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0,0.05); 
+        position: relative;
+        padding-left: 45% !important; 
+        text-align: right;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    .data-table td:last-child {
+        border-bottom: 0;
+    }
+    
+    .data-table td::before { 
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 40%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+    
+    .empresa-name, .empresa-region {
+        text-align: right;
+    }
+}

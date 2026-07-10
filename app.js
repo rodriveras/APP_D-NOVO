@@ -457,14 +457,14 @@ function renderTable(data) {
         const tr = document.createElement('tr');
         
         tr.innerHTML = `
-            <td>
+            <td data-label="Productor">
                 <div class="empresa-name">${item.empresa}</div>
                 <div class="empresa-region">${item.region}</div>
             </td>
-            <td>${getStatusBadge(item.informe_8)}</td>
-            <td>${getStatusBadge(item.diag_hidrico)}</td>
-            <td>${getStatusBadge(item.anteproyecto_foto)}</td>
-            <td>
+            <td data-label="Inf. 8">${getStatusBadge(item.informe_8)}</td>
+            <td data-label="Diag. Hídrico">${getStatusBadge(item.diag_hidrico)}</td>
+            <td data-label="Foto">${getStatusBadge(item.anteproyecto_foto)}</td>
+            <td data-label="Acción">
                 <button class="action-btn" onclick="openModal(${item.id})">Ver Detalle</button>
             </td>
         `;
