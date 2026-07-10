@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard IFI Frutícola - D-NOVO</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
+                <!-- Logo D-NOVO (Texto Estilizado como Logo) -->
+                <div style="font-size: 1.8rem; font-weight: 800; color: var(--blue); letter-spacing: -1px; display: flex; align-items: center; gap: 0.5rem; width: 100%; justify-content: center; margin-top: 1rem;">
+                    <span style="background: var(--blue); color: white; padding: 0.2rem 0.5rem; border-radius: 8px;">D</span> NOVO
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" onclick="switchView('view-dashboard', this)">📊 Dashboard Avances</a>
+                <a href="#" class="menu-item" onclick="switchView('view-agendamiento', this)">📅 Agendamiento</a>
+                <a href="#" class="menu-item" onclick="switchView('view-productores', this)">👥 Productores</a>
+                <a href="#" class="menu-item" onclick="switchView('view-configuracion', this)">⚙️ Configuración</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div>
+                    <h1 id="main-title">Estado de Informes IFI Frutícola</h1>
+                    <p class="subtitle" id="main-subtitle">Panel de control y priorización regional</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin+DNOVO&background=0D8ABC&color=fff" alt="User" class="avatar">
+                </div>
+            </header>
+
+            <!-- VISTA 1: DASHBOARD -->
+            <div id="view-dashboard" class="view-section active">
+                <!-- KPIs -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glass">
+                        <h3>Reporte N°8</h3>
+                        <div class="kpi-value" id="stat-rep8">0%</div>
+                        <div class="progress-container">
+                            <div class="progress-bar bg-blue" id="bar-rep8" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass">
+                        <h3>Diagnóstico Hídrico (Rodrigo)</h3>
+                        <div class="kpi-value" id="stat-hidrico">0%</div>
+                        <div class="progress-container">
+                            <div class="progress-bar bg-green" id="bar-hidrico" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass">
+                        <h3>Anteproyecto Fotovoltaico (Robert)</h3>
+                        <div class="kpi-value" id="stat-foto">0%</div>
+                        <div class="progress-container">
+                            <div class="progress-bar bg-orange" id="bar-foto" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div class="table-section glass">
+                    <div class="table-header">
+                        <h2>Avance por Beneficiario</h2>
+                        <div class="filters">
+                            <label for="region-filter">Región: </label>
+                            <select id="region-filter" class="select-css">
+                                <option value="Todas">Todas las Regiones</option>
+                                <option value="ARAUCANÍA">Araucanía</option>
+                                <option value="BIOBÍO">Biobío</option>
+                                <option value="ÑUBLE">Ñuble</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa Beneficiaria</th>
+                                    <th>Reporte N°8 IFI</th>
+                                    <th>Diagnóstico Hídrico</th>
+                                    <th>Anteproyecto Solar</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- JS Inject Data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 2: AGENDAMIENTO -->
+            <div id="view-agendamiento" class="view-section" style="display: none;">
+                <div class="glass" style="padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                        <h2>Julio 2026</h2>
+                        <button class="action-btn" onclick="openNuevaVisita()">+ Nueva Visita</button>
+                    </div>
+                    <!-- Fake Calendar -->
+                    <div class="calendar-grid">
+                        <div class="cal-day">Lun 6<br><div class="cal-event bg-blue">Balmey (Enrique/Roberto)</div></div>
+                        <div class="cal-day">Mar 7<br><div class="cal-event bg-orange">Metafruit (Robert B.)</div></div>
+                        <div class="cal-day">Mié 8<br><div class="cal-event bg-red">Cancelada: Catalina/Ricardo</div></div>
+                        <div class="cal-day">Jue 9<br><div class="cal-event bg-green">Biociclo (Alfonso)</div></div>
+                        <div class="cal-day">Vie 10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 3: PRODUCTORES -->
+            <div id="view-productores" class="view-section" style="display: none;">
+                <div class="filters" style="margin-bottom: 1.5rem;">
+                    <input type="text" id="search-productor" class="select-css" placeholder="Buscar productor, RUT o Región..." style="width: 100%; max-width: 400px;" oninput="filterProductores()">
+                </div>
+                <div id="productores-grid" class="productores-grid">
+                    <!-- JS Inject CRM Cards -->
+                </div>
+            </div>
+
+            <!-- VISTA 4: CONFIGURACIÓN -->
+            <div id="view-configuracion" class="view-section" style="display: none;">
+                <div class="config-panel glass">
+                    <h2>Gestión de Equipo</h2>
+                    <table class="data-table" style="margin-top: 1rem;">
+                        <tr><td>Enrique Sandoval</td><td><span class="badge status-completado">Activo</span></td></tr>
+                        <tr><td>Roberto</td><td><span class="badge status-completado">Activo</span></td></tr>
+                        <tr><td>Alfonso</td><td><span class="badge status-completado">Activo</span></td></tr>
+                        <tr><td>Robert Bravo</td><td><span class="badge status-completado">Activo</span></td></tr>
+                        <tr><td>Ricardo</td><td><span class="badge status-proceso">En Revisión</span></td></tr>
+                        <tr><td>Catalina</td><td><span class="badge status-proceso">En Revisión</span></td></tr>
+                    </table>
+                    
+                    <h2 style="margin-top: 3rem;">Plantillas de Informes</h2>
+                    <ul class="timeline" style="margin-top: 1rem;">
+                        <li><strong>Reporte N°8 Oficial:</strong> <a href="#">Descargar Word (.docx)</a></li>
+                        <li><strong>Ficha Anteproyecto Fotovoltaico:</strong> <a href="#">Descargar Excel (.xlsx)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal "Ver Detalle" -->
+    <div id="detalle-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-empresa-nombre">Nombre Empresa</h2>
+                    <p class="subtitle" id="modal-empresa-region">Región</p>
+                </div>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Sección CRM -->
+                <div class="detail-section">
+                    <h3>📍 Información de Contacto (CRM)</h3>
+                    <div class="info-grid">
+                        <div class="info-item"><strong>Representante:</strong> <span id="modal-rep"></span></div>
+                        <div class="info-item"><strong>RUT:</strong> <span id="modal-rut-span"></span> (Ver cabecera)</div>
+                        <div class="info-item"><strong>Teléfono:</strong> <span id="modal-tel"></span></div>
+                        <div class="info-item"><strong>Email:</strong> <span id="modal-email"></span></div>
+                        <div class="info-item"><strong>Superficie Frutícola:</strong> <span id="modal-sup"></span></div>
+                        <div class="info-item"><strong>Ubicación:</strong> <a id="modal-gmaps" href="#" target="_blank" style="color: var(--blue);">Abrir en Google Maps</a></div>
+                    </div>
+                </div>
+
+                <!-- Sección Datos Operacionales -->
+                <div class="detail-section">
+                    <h3>⚡ Datos Operacionales (Robert Bravo)</h3>
+                    <p class="section-desc">Sube aquí los documentos técnicos desde terreno para el cálculo Fotovoltaico.</p>
+                    <div class="upload-box">
+                        <div class="upload-item">
+                            <span>📄 Boletas de Energía Eléctrica</span>
+                            <label class="upload-btn">
+                                Subir Archivo
+                                <input type="file" style="display:none;" onchange="handleFileUpload(this, 'Boletas de Energía')">
+                            </label>
+                        </div>
+                        <div class="upload-item">
+                            <span>⚙️ Ficha Técnica de Bombas</span>
+                            <label class="upload-btn">
+                                Subir Archivo
+                                <input type="file" style="display:none;" onchange="handleFileUpload(this, 'Ficha Técnica')">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Bitácora -->
+                <div class="detail-section">
+                    <h3>📅 Bitácora de Visitas a Terreno</h3>
+                    <ul class="timeline">
+                        <li><strong>Ayer:</strong> Visita de levantamiento inicial (Enrique, Roberto, Alfonso). <em>Notas: Se conversó con el administrador.</em></li>
+                        <li><strong>Hace 1 semana:</strong> Contacto telefónico agendando la visita.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Modal "Nueva Visita" -->
+    <div id="agendar-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <div>
+                    <h2>Agendar Nueva Visita</h2>
+                    <p class="subtitle">Programar salida a terreno</p>
+                </div>
+                <button class="close-btn" onclick="closeNuevaVisita()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="form-visita" onsubmit="event.preventDefault(); submitVisita();">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">Empresa a visitar:</label>
+                        <select id="select-empresa" class="select-css" style="width: 100%;" required>
+                            <!-- Opciones inyectadas por JS -->
+                        </select>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">Fecha:</label>
+                            <input type="date" class="select-css" style="width: 100%;" required>
+                        </div>
+                        <div>
+                            <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">Hora:</label>
+                            <input type="time" class="select-css" style="width: 100%;" required>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display:block; margin-bottom: 0.5rem; font-weight: bold;">Asesores Asignados:</label>
+                        <select class="select-css" style="width: 100%;" multiple required>
+                            <option value="Enrique">Enrique Sandoval</option>
+                            <option value="Roberto">Roberto</option>
+                            <option value="Alfonso">Alfonso</option>
+                            <option value="Robert">Robert Bravo</option>
+                            <option value="Catalina">Catalina</option>
+                            <option value="Ricardo">Ricardo</option>
+                            <option value="Rodrigo">Rodrigo</option>
+                        </select>
+                        <small style="color: var(--text-muted);">Usa Ctrl para seleccionar varios</small>
+                    </div>
+
+                    <button type="submit" class="action-btn" style="width: 100%; font-size: 1.1rem; padding: 0.8rem;">Confirmar y Agendar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
