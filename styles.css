@@ -575,11 +575,11 @@ body {
 }
 
 .sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
 }
 
 .sidebar-overlay.active {
-    display: block;
+    display: block !important;
 }
 
 /* Main Content adjustments (Global) */
