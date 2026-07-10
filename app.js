@@ -458,8 +458,10 @@ function renderTable(data) {
         
         tr.innerHTML = `
             <td data-label="Productor">
-                <div class="empresa-name">${item.empresa}</div>
-                <div class="empresa-region">${item.region}</div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end; width: 100%; word-break: break-word;">
+                    <div class="empresa-name">${item.empresa}</div>
+                    <div class="empresa-region">${item.region}</div>
+                </div>
             </td>
             <td data-label="Inf. 8">${getStatusBadge(item.informe_8)}</td>
             <td data-label="Diag. Hídrico">${getStatusBadge(item.diag_hidrico)}</td>
@@ -509,20 +511,6 @@ function openModal(id) {
 
     document.getElementById('modal-empresa-nombre').innerText = item.empresa;
     document.getElementById('modal-empresa-region').innerText = item.region + " | RUT: " + item.rut;
-    
-    document.getElementById('modal-rep').innerText = item.representante;
-    document.getElementById('modal-tel').innerText = item.telefono;
-    document.getElementById('modal-email').innerText = item.email;
-    document.getElementById('modal-sup').innerText = item.superficie + " ha";
-    
-    const gmapsLink = document.getElementById('modal-gmaps');
-    if (item.maps && item.maps !== "#") {
-        gmapsLink.href = item.maps;
-        gmapsLink.style.display = "inline";
-    } else {
-        gmapsLink.href = "#";
-        gmapsLink.style.display = "none"; // Ocultar si no hay mapa
-    }
 
     document.getElementById('detalle-modal').style.display = 'flex';
 }
@@ -560,6 +548,7 @@ function switchView(viewId, menuElement) {
     const titles = {
         'view-dashboard': { title: 'Estado de Informes IFI Frutícola', sub: 'Panel de control y priorización regional' },
         'view-agendamiento': { title: 'Agendamiento y Terreno', sub: 'Calendario de visitas de asesores' },
+        'view-mapa': { title: 'Visor Geográfico Predial', sub: 'Exploración de datos geoespaciales' },
         'view-productores': { title: 'Directorio de Productores', sub: 'CRM y contacto directo' },
         'view-configuracion': { title: 'Configuración del Equipo', sub: 'Usuarios y plantillas' }
     };
@@ -570,6 +559,20 @@ function switchView(viewId, menuElement) {
     // Si entramos a Productores, renderizar las tarjetas si no están listas
     if(viewId === 'view-productores') {
         renderProductoresCards(beneficiariesData);
+    }
+    
+    // Si entramos al Mapa, recalcular tamaño y hacer zoom a Regiones
+    if(viewId === 'view-mapa') {
+        const iframe = document.querySelector('.map-iframe');
+        if (iframe && iframe.contentWindow && iframe.contentWindow.map) {
+            // Dar un pequeño delay para que el display:block surta efecto antes de recalcular
+            setTimeout(() => {
+                iframe.contentWindow.map.invalidateSize();
+                if (iframe.contentWindow.layer_Regiones_2) {
+                    iframe.contentWindow.map.fitBounds(iframe.contentWindow.layer_Regiones_2.getBounds());
+                }
+            }, 100);
+        }
     }
 }
 
@@ -594,6 +597,7 @@ function renderProductoresCards(data) {
                 <div class="contact-actions">
                     <a href="tel:${telStr}" class="btn-icon" title="Llamar">📞 Llamar</a>
                     <a href="mailto:${mailStr}" class="btn-icon" title="Enviar Email">✉️ Email</a>
+                    ${item.maps && item.maps !== '#' ? `<a href="${item.maps}" target="_blank" class="btn-icon" title="Google Maps" style="background: #e2e8f0; color: #2d3748;">📍 Mapa</a>` : ''}
                 </div>
             </div>
         `;

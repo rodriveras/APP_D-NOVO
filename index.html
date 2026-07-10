@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard IFI Frutícola - D-NOVO</title>
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=11">
     <!-- Google Fonts for modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -33,6 +33,7 @@
             <nav class="menu">
                 <a href="#" class="menu-item active" onclick="switchView('view-dashboard', this)">📊 Dashboard Avances</a>
                 <a href="#" class="menu-item" onclick="switchView('view-agendamiento', this)">📅 Agendamiento</a>
+                <a href="#" class="menu-item" onclick="switchView('view-mapa', this)">🗺️ Visor Geográfico</a>
                 <a href="#" class="menu-item" onclick="switchView('view-productores', this)">👥 Productores</a>
                 <a href="#" class="menu-item" onclick="switchView('view-configuracion', this)">⚙️ Configuración</a>
             </nav>
@@ -129,6 +130,11 @@
                 </div>
             </div>
 
+            <!-- VISTA: VISOR GEOGRÁFICO -->
+            <div id="view-mapa" class="view-section" style="display: none; padding: 0 !important; height: calc(100vh - 140px);">
+                <iframe src="../qgis2web_2026_07_10-18_28_27_050467/index.html?v=2" class="map-iframe"></iframe>
+            </div>
+
             <!-- VISTA 3: PRODUCTORES -->
             <div id="view-productores" class="view-section" style="display: none;">
                 <div class="filters" style="margin-bottom: 1.5rem;">
@@ -143,19 +149,31 @@
             <div id="view-configuracion" class="view-section" style="display: none;">
                 <div class="config-panel glass">
                     <h2>Gestión de Equipo</h2>
-                    <table class="data-table" style="margin-top: 1rem;">
-                        <tr><td>Enrique Sandoval</td><td><span class="badge status-completado">Activo</span></td></tr>
-                        <tr><td>Roberto</td><td><span class="badge status-completado">Activo</span></td></tr>
-                        <tr><td>Alfonso</td><td><span class="badge status-completado">Activo</span></td></tr>
-                        <tr><td>Robert Bravo</td><td><span class="badge status-completado">Activo</span></td></tr>
-                        <tr><td>Ricardo</td><td><span class="badge status-proceso">En Revisión</span></td></tr>
-                        <tr><td>Catalina</td><td><span class="badge status-proceso">En Revisión</span></td></tr>
-                    </table>
+                    <div class="team-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Enrique Sandoval</span><span class="badge status-completado">Activo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Roberto</span><span class="badge status-completado">Activo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Alfonso</span><span class="badge status-completado">Activo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Robert Bravo</span><span class="badge status-completado">Activo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Ricardo</span><span class="badge status-proceso">En Revisión</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; background: rgba(255,255,255,0.7); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <span style="font-weight: 500;">Catalina</span><span class="badge status-proceso">En Revisión</span>
+                        </div>
+                    </div>
                     
                     <h2 style="margin-top: 3rem;">Plantillas de Informes</h2>
                     <ul class="timeline" style="margin-top: 1rem;">
-                        <li><strong>Reporte N°8 Oficial:</strong> <a href="#">Descargar Word (.docx)</a></li>
-                        <li><strong>Ficha Anteproyecto Fotovoltaico:</strong> <a href="#">Descargar Excel (.xlsx)</a></li>
+                        <li><strong>Reporte N°8 Oficial:</strong> <a href="../Reporte_N8_IFI_Gestion_Hidrica_rr.xlsx" download="Reporte_N8_Oficial.xlsx">Descargar Excel (.xlsx)</a></li>
+                        <li><strong>Ficha Anteproyecto Fotovoltaico:</strong> <a href="../Ficha_Anteproyecto_Fotovoltaico.xlsx" download="Ficha_Anteproyecto.xlsx">Descargar Excel (.xlsx)</a></li>
                     </ul>
                 </div>
             </div>
@@ -174,18 +192,7 @@
             </div>
             
             <div class="modal-body">
-                <!-- Sección CRM -->
-                <div class="detail-section">
-                    <h3>📍 Información de Contacto (CRM)</h3>
-                    <div class="info-grid">
-                        <div class="info-item"><strong>Representante:</strong> <span id="modal-rep"></span></div>
-                        <div class="info-item"><strong>RUT:</strong> <span id="modal-rut-span"></span> (Ver cabecera)</div>
-                        <div class="info-item"><strong>Teléfono:</strong> <span id="modal-tel"></span></div>
-                        <div class="info-item"><strong>Email:</strong> <span id="modal-email"></span></div>
-                        <div class="info-item"><strong>Superficie Frutícola:</strong> <span id="modal-sup"></span></div>
-                        <div class="info-item"><strong>Ubicación:</strong> <a id="modal-gmaps" href="#" target="_blank" style="color: var(--blue);">Abrir en Google Maps</a></div>
-                    </div>
-                </div>
+
 
                 <!-- Sección Datos Operacionales -->
                 <div class="detail-section">
@@ -273,6 +280,6 @@
         </div>
     </div>
 
-    <script src="app.js?v=5"></script>
+    <script src="app.js?v=13"></script>
 </body>
 </html>
