@@ -10,6 +10,18 @@
 </head>
 <body>
     <div class="app-container">
+
+        <!-- Mobile Top Nav -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-logo">
+                <span>D</span> NOVO
+            </div>
+            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+        
+        <!-- Overlay for Sidebar -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="brand" style="flex-direction: column; align-items: flex-start; gap: 1rem;">

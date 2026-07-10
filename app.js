@@ -544,8 +544,17 @@ function switchView(viewId, menuElement) {
     links.forEach(l => l.classList.remove('active'));
     
     // 3. Mostrar la vista solicitada
+
+    // 3. Mostrar la vista solicitada
     document.getElementById(viewId).style.display = 'block';
     menuElement.classList.add('active');
+    
+    // Si estamos en móvil y el sidebar está abierto, cerrarlo al seleccionar
+    const sidebar = document.querySelector('.sidebar');
+    if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
+        toggleSidebar();
+    }
+
     
     // Cambiar el título superior dependiendo de la vista
     const titles = {
@@ -650,5 +659,20 @@ function handleFileUpload(inputElement, docName) {
                 <span class="badge status-completado">✅ Subido</span>
             `;
         }, 800);
+    }
+}
+
+
+// --- Lógica del Menú Lateral Móvil ---
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+    } else {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
     }
 }
