@@ -1,3 +1,12 @@
+// Datos Simulados (Mock Data)
+// Force unregister rogue Service Workers that hijack GitHub Pages
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+            registration.unregister();
+        }
+    });
+}
 
 // Datos generados automáticamente a partir del Excel con contactos reales
 const beneficiariesData = [
@@ -563,7 +572,18 @@ function switchView(viewId, menuElement) {
     
     // Si entramos al Mapa, recalcular tamaño y hacer zoom a Regiones
     if(viewId === 'view-mapa') {
-        const iframe = document.querySelector('.map-iframe');
+        let iframe = document.querySelector('.map-iframe');
+        
+        // Anti-Cache / Anti-ServiceWorker Bug Fix
+        try {
+            // Si por error de caché cargó el Dashboard adentro del iframe, forzamos recarga con timestamp único
+            if (iframe && iframe.contentDocument && iframe.contentDocument.getElementById('view-dashboard')) {
+                iframe.src = 'visor_mapa/index.html?t=' + new Date().getTime();
+            }
+        } catch(e) {
+            // Ignore cross-origin errors
+        }
+
         if (iframe && iframe.contentWindow && iframe.contentWindow.map) {
             // Dar un pequeño delay para que el display:block surta efecto antes de recalcular
             setTimeout(() => {
