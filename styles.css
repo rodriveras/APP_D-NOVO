@@ -43,6 +43,8 @@ body {
     padding: 2rem 1.5rem;
     position: fixed;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .brand {
