@@ -131,7 +131,7 @@
             maxNativeZoom: 19
         });
         layer_OpenStreetMap_0;
-        // map.addLayer(layer_OpenStreetMap_0);
+        map.addLayer(layer_OpenStreetMap_0);
         map.createPane('pane_satelite_1');
         map.getPane('pane_satelite_1').style.zIndex = 401;
         var layer_satelite_1 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -581,15 +581,9 @@
             {label: '<img src="legend/Empresas_Araucania_4.png" /> Empresas_Araucania', layer: layer_Empresas_Araucania_4},
             {label: '<img src="legend/Predios_Araucania_3.png" /> Predios_Araucania', layer: layer_Predios_Araucania_3},]},
             {label: '<img src="legend/Regiones_2.png" /> Regiones', layer: layer_Regiones_2},
-]
-        var baseTree = {
-            label: 'Mapas Base',
-            children: [
-                {label: "Satélite (Esri)", layer: layer_satelite_1, name: "Satélite (Esri)"},
-                {label: "OpenStreetMap (OSM)", layer: layer_OpenStreetMap_0, name: "OpenStreetMap (OSM)"}
-            ]
-        };
-        var lay = L.control.layers.tree(baseTree, overlaysTree,{
+            {label: "satelite", layer: layer_satelite_1, radioGroup: 'bm' },
+            {label: "OpenStreetMap", layer: layer_OpenStreetMap_0},]
+        var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
             //closedSymbol: '&#8862; &#x1f5c0;',
