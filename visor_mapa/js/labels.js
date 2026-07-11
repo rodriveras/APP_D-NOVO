@@ -1,6 +1,6 @@
 var hideLabel = function(label) {
-    label.labelObject.style.opacity = 0;
-    label.labelObject.style.transition = 'opacity 0s';
+    // Disable label hiding to ensure all regions show labels equally
+    label.labelObject.style.opacity = 1;
 };
 var showLabel = function(label) {
     label.labelObject.style.opacity = 1;
