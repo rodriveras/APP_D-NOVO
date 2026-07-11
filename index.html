@@ -31,7 +31,8 @@
                 </div>
             </div>
             <nav class="menu">
-                <a href="#" class="menu-item active" onclick="switchView('view-dashboard', this)">📊 Dashboard Avances</a>
+                <a href="#" class="menu-item active" onclick="switchView('view-portada', this)">🏠 Inicio</a>
+                <a href="#" class="menu-item" onclick="switchView('view-dashboard', this)">📊 Dashboard Avances</a>
                 <a href="#" class="menu-item" onclick="switchView('view-agendamiento', this)">📅 Agendamiento</a>
                 <a href="#" class="menu-item" onclick="switchView('view-mapa', this)">🗺️ Visor Geográfico</a>
                 <a href="#" class="menu-item" onclick="switchView('view-productores', this)">👥 Productores</a>
@@ -41,7 +42,7 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <header class="header">
+            <header class="header" style="display: none;">
                 <div>
                     <h1 id="main-title">Estado de Informes IFI Frutícola</h1>
                     <p class="subtitle" id="main-subtitle">Panel de control y priorización regional</p>
@@ -51,8 +52,24 @@
                 </div>
             </header>
 
+            <!-- VISTA 0: PORTADA -->
+            <div id="view-portada" class="view-section active">
+                <div class="portada-container glass">
+                    <div class="portada-content">
+                        <img src="logo-dnovo.jpg" alt="D-NOVO Logo" class="portada-logo">
+                        <h1 class="portada-title">Plataforma de Inteligencia Territorial</h1>
+                        <p class="portada-subtitle">Sistema de Control, Gestión y Monitoreo Estratégico - IFI Frutícola</p>
+                        <div class="portada-divider"></div>
+                        <p class="portada-text">
+                            Bienvenido al entorno unificado de <strong>D-NOVO</strong>. Aquí podrás visualizar el estado de los informes, gestionar la información de los productores, coordinar agendamientos y explorar territorialmente el impacto del programa.
+                        </p>
+                        <button class="btn-primary portada-btn" onclick="document.querySelector('.menu-item:nth-child(2)').click();">Ingresar al Dashboard</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- VISTA 1: DASHBOARD -->
-            <div id="view-dashboard" class="view-section active">
+            <div id="view-dashboard" class="view-section" style="display: none;">
                 <!-- KPIs -->
                 <div class="kpi-grid">
                     <div class="kpi-card glass">

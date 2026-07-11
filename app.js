@@ -541,10 +541,21 @@ function switchView(viewId, menuElement) {
     links.forEach(l => l.classList.remove('active'));
     
     // 3. Mostrar la vista solicitada
-
-    // 3. Mostrar la vista solicitada
     document.getElementById(viewId).style.display = 'block';
-    menuElement.classList.add('active');
+    
+    // Si viene de un botón sin this (menuElement undefined), forzamos a buscar el correspondiente
+    if (menuElement) {
+        menuElement.classList.add('active');
+    }
+
+    // Ocultar header en la portada, mostrar en el resto
+    const header = document.querySelector('.header');
+    if (viewId === 'view-portada') {
+        header.style.display = 'none';
+    } else {
+        header.style.display = 'flex';
+    }
+
     
     // Si estamos en móvil y el sidebar está abierto, cerrarlo al seleccionar
     const sidebar = document.querySelector('.sidebar');
@@ -570,28 +581,15 @@ function switchView(viewId, menuElement) {
         renderProductoresCards(beneficiariesData);
     }
     
-    // Si entramos al Mapa, recalcular tamaño y hacer zoom a Regiones
+    // Si entramos al Mapa, recalcular tamao 
     if(viewId === 'view-mapa') {
-        let iframe = document.querySelector('.map-iframe');
-        
-        // Anti-Cache / Anti-ServiceWorker Bug Fix
-        try {
-            // Si por error de caché cargó el Dashboard adentro del iframe, forzamos recarga con timestamp único
-            if (iframe && iframe.contentDocument && iframe.contentDocument.getElementById('view-dashboard')) {
-                iframe.src = 'visor_mapa/index.html?t=' + new Date().getTime();
-            }
-        } catch(e) {
-            // Ignore cross-origin errors
-        }
-
+        const iframe = document.querySelector('.map-iframe');
         if (iframe && iframe.contentWindow && iframe.contentWindow.map) {
-            // Dar un pequeño delay para que el display:block surta efecto antes de recalcular
             setTimeout(() => {
-                iframe.contentWindow.map.invalidateSize();
-                if (iframe.contentWindow.layer_Regiones_2) {
-                    iframe.contentWindow.map.fitBounds(iframe.contentWindow.layer_Regiones_2.getBounds());
-                }
-            }, 100);
+                try {
+                    iframe.contentWindow.map.invalidateSize();
+                } catch(e) {}
+            }, 300);
         }
     }
 }
